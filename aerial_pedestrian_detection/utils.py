@@ -6,6 +6,8 @@ import torchvision.models.detection.faster_rcnn
 import torchvision.transforms.transforms
 import albumentations
 import albumentations.pytorch.transforms
+import logging
+import tqdm
 
 def plot_bboxes(image, target) -> None:
     fig, a = plt.subplots(1,1)
@@ -46,3 +48,15 @@ def get_transforms(train):
 
 def collate_fn(batch):
     return tuple(zip(*batch))
+
+class TqdmLoggingHandler(logging.Handler):
+    def __init__(self, level=logging.NOTSET):
+        super().__init__(level)
+
+    def emit(self, record):
+        try:
+            msg = self.format(record)
+            tqdm.tqdm.write(msg)
+            self.flush()
+        except Exception:
+            self.handleError(record)
