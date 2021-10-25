@@ -2,4 +2,4 @@ venv
 data
 __pycache__
 aerial_pedestrian_detection/models
-ffmpeg.exe
+sdd_utils/ffmpeg.exe
