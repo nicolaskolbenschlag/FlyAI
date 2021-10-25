@@ -16,7 +16,7 @@ log.addHandler(utils.TqdmLoggingHandler())
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--batch_size", type=int, default=4)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--dataset_dir", type=str, default="data/sdd_voc")
 

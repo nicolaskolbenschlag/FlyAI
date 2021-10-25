@@ -46,21 +46,24 @@ class StanfordDroneDataset(torchvision.datasets.VisionDataset):
     def __len__(self) -> int:
         return len(self.images)
 
-    # @property
-    # def annotations(self) -> List[str]:
-    #     return self.targets
-
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         image = Image.open(self.images[index]).convert("RGB")
         image = np.array(image)
 
-        # labels_file = self.parse_voc_xml(ET_parse(self.annotations[index]).getroot())
         labels_file = self.parse_voc_xml(ET_parse(self.targets[index]).getroot())
 
         objects = labels_file["annotation"]["object"]
         bboxes, class_labels = [], []
+        
         for object in objects:
-            # TODO maybe sort out if generated or hidden
+            
+            # NOTE sort out if out of border (causes trouble in augmentations elsewise)
+            if int(object["bndbox"]["xmin"]) < 0\
+                or int(object["bndbox"]["ymin"]) < 0\
+                or int(object["bndbox"]["xmax"]) > image.shape[1]\
+                or int(object["bndbox"]["ymax"]) > image.shape[0]:
+                continue
+
             bboxes += [
                 [int(num) for num in list(object["bndbox"].values())]
             ]
@@ -105,7 +108,7 @@ if __name__ == "__main__":
         transforms=utils.get_transforms(train=True)
     )
 
-    image, target, labels = dataset[1]
+    image, target, labels = dataset[-1]
     image = image.numpy().transpose(1, 2, 0)
 
     utils.plot_bboxes(image, {"boxes": target["boxes"]})
