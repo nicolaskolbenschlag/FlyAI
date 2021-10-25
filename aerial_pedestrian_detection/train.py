@@ -58,10 +58,10 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
             # NOTE sort out samples without bbox (causes error during loss computation elsewise)
             images_, targets_ = images, targets
             images, targets = [], []
-            for i in range(images_.shape[0]):
+            for i in range(len(images_)):
                 if len(targets_[i]["labels"]) > 0:
-                    images += [images[i]]
-                    targets += [targets[i]]
+                    images += [images_[i]]
+                    targets += [targets_[i]]
             del images_; del targets_
 
             loss_dict = model(images, targets)
