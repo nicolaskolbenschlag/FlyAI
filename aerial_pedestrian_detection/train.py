@@ -55,6 +55,15 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
             images = list(image.to(device) for image in images)
             targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
+            # NOTE sort out samples without bbox (causes error during loss computation elsewise)
+            images_, targets_ = images, targets
+            images, targets = [], []
+            for i in range(images_.shape[0]):
+                if len(targets_[i]["labels"]) > 0:
+                    images += [images[i]]
+                    targets += [targets[i]]
+            del images_; del targets_
+
             loss_dict = model(images, targets)
             loss = sum(loss_dict.values())
 

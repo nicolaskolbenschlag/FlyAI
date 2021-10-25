@@ -107,6 +107,7 @@ if __name__ == "__main__":
         image_set="trainval",
         transforms=utils.get_transforms(train=True)
     )
+    
 
     image, target, labels = dataset[-1]
     image = image.numpy().transpose(1, 2, 0)
