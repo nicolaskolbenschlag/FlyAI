@@ -76,7 +76,7 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
 
             lr_scheduler.step()
     
-    torch.save(model.state_dict(), os.join("models", "model.pth"))
+    torch.save(model.state_dict(), os.path.join("models", "model.pth"))
 
 
 if __name__ == "__main__":
