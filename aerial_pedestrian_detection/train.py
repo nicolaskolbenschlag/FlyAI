@@ -18,6 +18,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--epochs", type=int, default=1)
+    parser.add_argument("--dataset_dir", type=str, default="data/sdd_voc")
 
     params = parser.parse_args()
     return params
@@ -28,7 +29,7 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
     log.debug(f"device: {device}")
 
     dataset_train = dataset.StanfordDroneDataset(
-        root="data/sdd_voc",
+        root=args.dataset_dir,
         image_set="trainval",
         transforms=utils.get_transforms(train=True)
     )
@@ -66,7 +67,7 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
 
             lr_scheduler.step()
     
-    torch.save(model.state_dict(), os.join("models", "model-01"))
+    torch.save(model.state_dict(), os.join("models", "model.pth"))
 
 
 if __name__ == "__main__":
