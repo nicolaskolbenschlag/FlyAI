@@ -35,11 +35,12 @@ def get_transforms(train):
         transforms += [
             # NOTE randomlly (p=0.5) apply transformations during training
             albumentations.HorizontalFlip(),
+            albumentations.VerticalFlip(),
             albumentations.RandomBrightnessContrast(),
-            albumentations.RandomFog(),
-            albumentations.RandomSnow(),
-            albumentations.RandomRain(),
-            albumentations.RandomShadow()
+            albumentations.RandomFog(p=.2),
+            albumentations.RandomSnow(p=.2),
+            albumentations.RandomRain(p=.2),
+            albumentations.RandomShadow(p=.3)
             
         ]
 
