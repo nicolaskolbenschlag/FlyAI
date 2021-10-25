@@ -28,11 +28,19 @@ def get_model(num_classes: int) -> torch.nn.Module:
 def get_transforms(train):
     """
     Use this: https://albumentations.ai/docs/getting_started/bounding_boxes_augmentation/
+    and https://albumentations.ai/docs/api_reference/augmentations/transforms/
     """
     transforms = []
     if train:
         transforms += [
-            albumentations.HorizontalFlip()
+            # NOTE randomlly (p=0.5) apply transformations during training
+            albumentations.HorizontalFlip(),
+            albumentations.RandomBrightnessContrast(),
+            albumentations.RandomFog(),
+            albumentations.RandomSnow(),
+            albumentations.RandomRain(),
+            albumentations.RandomShadow()
+            
         ]
 
     transforms += [
