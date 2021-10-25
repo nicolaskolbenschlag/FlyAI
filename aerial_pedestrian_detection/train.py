@@ -64,6 +64,9 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
                     targets += [targets_[i]]
             del images_; del targets_
 
+            if len(images) == 0:
+                continue
+
             loss_dict = model(images, targets)
             loss = sum(loss_dict.values())
 
