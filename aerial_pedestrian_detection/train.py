@@ -1,6 +1,4 @@
 import torch.utils.data
-import torch.nn
-import torch.cuda
 import torch
 import argparse
 import logging
@@ -25,7 +23,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
-    device = torch.device("cuda") if torch.cuda.is_available() else "cpu"
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     log.debug(f"device: {device}")
 
     dataset_train = dataset.StanfordDroneDataset(

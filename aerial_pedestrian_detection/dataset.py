@@ -104,9 +104,9 @@ if __name__ == "__main__":
 
     dataset = StanfordDroneDataset(
         root="data/sdd_voc",
-        image_set="test",#"trainval",
+        image_set="trainval",
         transforms=utils.get_transforms(train=True)
-    )    
+    )
 
     image, target, labels = dataset[-1]
     image = image.numpy().transpose(1, 2, 0)
