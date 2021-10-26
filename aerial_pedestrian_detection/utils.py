@@ -37,9 +37,9 @@ def get_transforms(train):
             albumentations.HorizontalFlip(),
             albumentations.VerticalFlip(),
             albumentations.RandomBrightnessContrast(),
-            albumentations.RandomFog(p=.2),
-            albumentations.RandomSnow(p=.2),
-            albumentations.RandomRain(p=.2),
+            # albumentations.RandomFog(p=.2),
+            # albumentations.RandomSnow(p=.2),
+            # albumentations.RandomRain(p=.2),
             albumentations.RandomShadow(p=.3)
             
         ]
