@@ -35,7 +35,7 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
     data_loader = torch.utils.data.DataLoader(
         dataset=dataset_train,
         batch_size=args.batch_size,
-        shuffle=False,
+        shuffle=True,
         collate_fn=utils.collate_fn
     )
     
