@@ -40,7 +40,7 @@ def train(args: argparse.Namespace, model: torch.nn.Module = None) -> None:
     )
     
     if model is None:
-        model = utils.get_model(num_classes=7)
+        model = utils.get_model(num_classes=7, encoder_weights_frozen=True)
     model.to(device)
 
     params = [p for p in model.parameters() if p.requires_grad]

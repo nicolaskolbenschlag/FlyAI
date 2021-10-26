@@ -19,8 +19,14 @@ def plot_bboxes(image, target) -> None:
         a.add_patch(rect)
     plt.show()
 
-def get_model(num_classes: int, pretrained: bool = True) -> torch.nn.Module:
+def get_model(num_classes: int, pretrained: bool = True, encoder_weights_frozen: bool = False) -> torch.nn.Module:
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=pretrained)
+    
+    # NOTE https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html#convnet-as-fixed-feature-extractor
+    if encoder_weights_frozen:
+        for param in model.parameters():
+            param.requires_grad = False
+
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     model.roi_heads.box_predictor = torchvision.models.detection.faster_rcnn.FastRCNNPredictor(in_features, num_classes)
     return model
